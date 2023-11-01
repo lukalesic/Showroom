@@ -17,6 +17,13 @@
 		DF8BA89D2AF2A4C00000FB37 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DF8BA89C2AF2A4C00000FB37 /* FirebaseFirestore */; };
 		DF8BA89F2AF2A4C00000FB37 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DF8BA89E2AF2A4C00000FB37 /* FirebaseFirestoreSwift */; };
 		DF8BA8A12AF2A5F60000FB37 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF8BA8A02AF2A5F60000FB37 /* GoogleService-Info.plist */; };
+		DF9F65DA2AF2B7BA008F109E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65D92AF2B7BA008F109E /* Constants.swift */; };
+		DF9F65DC2AF2C279008F109E /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65DB2AF2C279008F109E /* ModelType.swift */; };
+		DF9F65DF2AF2C31D008F109E /* ObjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65DE2AF2C31D008F109E /* ObjectsView.swift */; };
+		DF9F65E12AF2C4BF008F109E /* ObjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65E02AF2C4BF008F109E /* ObjectsViewModel.swift */; };
+		DF9F65E32AF2EC6B008F109E /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65E22AF2EC6B008F109E /* LoadingState.swift */; };
+		DF9F65E62AF2F2D8008F109E /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65E52AF2F2D8008F109E /* Repository.swift */; };
+		DF9F65E82AF2F2EC008F109E /* ObjectsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65E72AF2F2EC008F109E /* ObjectsRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +36,13 @@
 		DF8BA8862AF2A2F20000FB37 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DF8BA8882AF2A2F20000FB37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF8BA8A02AF2A5F60000FB37 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DF9F65D92AF2B7BA008F109E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DF9F65DB2AF2C279008F109E /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
+		DF9F65DE2AF2C31D008F109E /* ObjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsView.swift; sourceTree = "<group>"; };
+		DF9F65E02AF2C4BF008F109E /* ObjectsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsViewModel.swift; sourceTree = "<group>"; };
+		DF9F65E22AF2EC6B008F109E /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
+		DF9F65E52AF2F2D8008F109E /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		DF9F65E72AF2F2EC008F109E /* ObjectsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +81,12 @@
 		DF8BA8782AF2A2F10000FB37 /* Showroom */ = {
 			isa = PBXGroup;
 			children = (
+				DF9F65E42AF2F0A3008F109E /* Repository */,
+				DF9F65D82AF2B7B3008F109E /* Helpers */,
+				DF9F65D72AF2B7B0008F109E /* Model */,
+				DF9F65D62AF2B7AC008F109E /* ViewModel */,
+				DF9F65D52AF2B7A8008F109E /* View */,
 				DF8BA8A02AF2A5F60000FB37 /* GoogleService-Info.plist */,
-				DF8BA87D2AF2A2F10000FB37 /* ShowroomApp.swift */,
-				DF8BA87F2AF2A2F10000FB37 /* ContentView.swift */,
-				DF8BA8812AF2A2F10000FB37 /* ImmersiveView.swift */,
 				DF8BA8832AF2A2F20000FB37 /* Assets.xcassets */,
 				DF8BA8882AF2A2F20000FB37 /* Info.plist */,
 				DF8BA8852AF2A2F20000FB37 /* Preview Content */,
@@ -99,6 +115,59 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DF9F65D52AF2B7A8008F109E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DF9F65DD2AF2C2FC008F109E /* Immersive */,
+				DF8BA87F2AF2A2F10000FB37 /* ContentView.swift */,
+				DF9F65DE2AF2C31D008F109E /* ObjectsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DF9F65D62AF2B7AC008F109E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DF9F65E02AF2C4BF008F109E /* ObjectsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DF9F65D72AF2B7B0008F109E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DF9F65D82AF2B7B3008F109E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DF8BA87D2AF2A2F10000FB37 /* ShowroomApp.swift */,
+				DF9F65D92AF2B7BA008F109E /* Constants.swift */,
+				DF9F65DB2AF2C279008F109E /* ModelType.swift */,
+				DF9F65E22AF2EC6B008F109E /* LoadingState.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DF9F65DD2AF2C2FC008F109E /* Immersive */ = {
+			isa = PBXGroup;
+			children = (
+				DF8BA8812AF2A2F10000FB37 /* ImmersiveView.swift */,
+			);
+			path = Immersive;
+			sourceTree = "<group>";
+		};
+		DF9F65E42AF2F0A3008F109E /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				DF9F65E52AF2F2D8008F109E /* Repository.swift */,
+				DF9F65E72AF2F2EC008F109E /* ObjectsRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,8 +251,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF8BA8802AF2A2F10000FB37 /* ContentView.swift in Sources */,
+				DF9F65E12AF2C4BF008F109E /* ObjectsViewModel.swift in Sources */,
+				DF9F65DC2AF2C279008F109E /* ModelType.swift in Sources */,
+				DF9F65DF2AF2C31D008F109E /* ObjectsView.swift in Sources */,
+				DF9F65E32AF2EC6B008F109E /* LoadingState.swift in Sources */,
 				DF8BA87E2AF2A2F10000FB37 /* ShowroomApp.swift in Sources */,
+				DF9F65E82AF2F2EC008F109E /* ObjectsRepository.swift in Sources */,
 				DF8BA8822AF2A2F10000FB37 /* ImmersiveView.swift in Sources */,
+				DF9F65DA2AF2B7BA008F109E /* Constants.swift in Sources */,
+				DF9F65E62AF2F2D8008F109E /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
