@@ -8,19 +8,43 @@
 import SwiftUI
 import RealityKit
 import RealityKitContent
+import FirebaseFirestore
 
 struct ContentView: View {
 
     @State private var showImmersiveSpace = false
     @State private var immersiveSpaceIsShown = false
+    @State private var entryText = ""
 
     @Environment(\.openImmersiveSpace) var openImmersiveSpace
     @Environment(\.dismissImmersiveSpace) var dismissImmersiveSpace
+    
+    let database = Firestore.firestore()
+    @State private var documents: [DocumentSnapshot] = []
 
     var body: some View {
         VStack {
             Text("Welcome to Showroom!")
 
+            TextField("textfield", text: $entryText)
+            
+            // Display the list of documents
+                    List(documents, id: \.documentID) { document in
+                        Text(document.data()?["test"] as? String ?? "No data")
+                    }
+                    .onAppear {
+                        // Fetch the documents when the view appears
+                        fetchDocuments()
+                    }
+            
+            Button {
+                write(entryText)
+                fetchDocuments()
+            } label: {
+                Text("save")
+            }
+
+            
             Toggle("Show Immersive Space", isOn: $showImmersiveSpace)
                 .toggleStyle(.button)
                 .padding(.top, 50)
@@ -41,6 +65,25 @@ struct ContentView: View {
                 } else if immersiveSpaceIsShown {
                     await dismissImmersiveSpace()
                     immersiveSpaceIsShown = false
+                }
+            }
+        }
+    }
+    
+    func write(_ text: String) {
+        let ref = database.collection("test").addDocument(data: ["test": text])
+
+    }
+    
+    func fetchDocuments() {
+        let collectionRef = database.collection("test")
+        
+        collectionRef.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching documents: \(error)")
+            } else {
+                if let documents = snapshot?.documents {
+                    self.documents = documents
                 }
             }
         }
