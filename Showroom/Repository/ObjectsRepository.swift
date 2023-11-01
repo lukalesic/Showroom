@@ -6,27 +6,29 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import Observation
 
-class ObjectsRepository: Repository {
-//    var loadingState = LoadingState.empty
-//    
-//    func fetchAllData() {
-//        loadingState = .loading
-//        for modelType in ModelType.allCases {
-//            let collectionRef = database.collection(modelType.databaseId)
-//            collectionRef.getDocuments { snapshot, error in
-//                if let error = error {
-//                    print("Error fetching documents: \(error.localizedDescription)")
-//                }
-//                else {
-//                    if let documents = snapshot?.documents {
-//                        self.data.append(contentsOf: documents)
-//                        self.loadingState = .loaded
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    
+final class ObjectsRepository: Repository {
+    var loadingState = LoadingState.empty
+    let database = Firestore.firestore()
+    var data: [DocumentSnapshot] = []
+    
+    func fetchAllData() {
+        loadingState = .loading
+        for modelType in ModelType.allCases {
+            let collectionRef = database.collection(modelType.databaseId)
+            collectionRef.getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching documents: \(error.localizedDescription)")
+                }
+                else {
+                    if let documents = snapshot?.documents {
+                        self.data.append(contentsOf: documents)
+                        self.loadingState = .loaded
+                    }
+                }
+            }
+        }
+    }
 }

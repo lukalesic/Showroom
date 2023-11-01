@@ -27,7 +27,7 @@ struct ObjectsView: View {
             }
         } detail: {
             if let selectedCategory {
-                switch viewModel.loadingState {
+                switch viewModel.repository.loadingState {
                 case .loaded:
                     Text(viewModel.selectedCategory.rawValue)
                     //TODO: DetailView(selectedcategory: viewModel.selectedCategory)
@@ -46,13 +46,8 @@ struct ObjectsView: View {
         .onChange(of: selectedCategory) { _, newCategory in
             if let newCategory = newCategory {
                 viewModel.selectedCategory = newCategory
-               // viewModel.fetchDocuments()
-             //   viewModel.fetchAllData()
                 viewModel.filterDocuments()
             }
-        }
-        .onAppear() {
-            viewModel.fetchAllData()
         }
     }
 }
