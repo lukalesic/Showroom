@@ -1,5 +1,5 @@
 //
-//  Object.swift
+//  ModelObject.swift
 //  Showroom
 //
 //  Created by Luka Lešić on 02.11.2023..

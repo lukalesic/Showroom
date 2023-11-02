@@ -12,7 +12,7 @@ import FirebaseFirestore
 @Observable
 class ObjectsViewModel {
     var selectedCategory: ModelType
-    let repository = ObjectsRepository()
+    let repository = ModelObjectsRepository()
     var filteredObjects: [ModelObject] = []
 
     init(selectedCategory: ModelType) {
@@ -23,7 +23,7 @@ class ObjectsViewModel {
     //MARK: filtering data
     
     func filterObjects() {
-        let filteredDocuments = repository.objects.filter { object in
+        let filteredDocuments = repository.modelObjects.filter { object in
             let collectionName = object.parentCollection
             return collectionName == selectedCategory.databaseId
         }

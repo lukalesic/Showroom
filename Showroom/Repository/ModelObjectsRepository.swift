@@ -1,5 +1,5 @@
 //
-//  ObjectsRepository.swift
+//  ModelObjectsRepository.swift
 //  Showroom
 //
 //  Created by Luka Lešić on 01.11.2023..
@@ -9,10 +9,10 @@ import Foundation
 import FirebaseFirestore
 import Observation
 
-final class ObjectsRepository: Repository {
+final class ModelObjectsRepository: Repository {
     var loadingState = LoadingState.empty
     let database = Firestore.firestore()
-    var objects: [ModelObject] = []
+    var modelObjects: [ModelObject] = []
     
     func fetchAllData() {
         loadingState = .loading
@@ -24,7 +24,7 @@ final class ObjectsRepository: Repository {
                 }
                 else {
                     if let documents = snapshot?.documents {
-                        self.mapSnapshotToObjects(snapshot: documents)
+                        self.mapSnapshotToModelObjects(snapshot: documents)
                         self.loadingState = .loaded
                     }
                 }
@@ -32,11 +32,11 @@ final class ObjectsRepository: Repository {
         }
     }
     
-    func mapSnapshotToObjects(snapshot: [DocumentSnapshot]) {
+    func mapSnapshotToModelObjects(snapshot: [DocumentSnapshot]) {
         let adapter = FirebaseAdapter()
         let modelObjects = snapshot.map {
             adapter.adaptSnapshot($0)
         }
-        self.objects.append(contentsOf: modelObjects)
+        self.modelObjects.append(contentsOf: modelObjects)
     }
 }
