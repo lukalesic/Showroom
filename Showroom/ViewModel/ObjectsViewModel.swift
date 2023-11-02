@@ -13,20 +13,20 @@ import FirebaseFirestore
 class ObjectsViewModel {
     var selectedCategory: ModelType
     let repository = ObjectsRepository()
-    var filteredData: [DocumentSnapshot] = []
+    var filteredObjects: [ModelObject] = []
 
     init(selectedCategory: ModelType) {
         self.selectedCategory = selectedCategory
         repository.fetchAllData()
     }
     
-    //MARK: fetching data
+    //MARK: filtering data
     
-    func filterDocuments() {
-        let filteredDocuments = repository.data.filter { document in
-            let collectionName = document.reference.parent.collectionID
+    func filterObjects() {
+        let filteredDocuments = repository.objects.filter { object in
+            let collectionName = object.parentCollection
             return collectionName == selectedCategory.databaseId
         }
-       filteredData = filteredDocuments
+      filteredObjects = filteredDocuments
     }
 }

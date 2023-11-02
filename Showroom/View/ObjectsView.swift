@@ -36,7 +36,7 @@ struct ObjectsView: View {
         .onChange(of: selectedCategory) { _, newCategory in
             if let newCategory = newCategory {
                 viewModel.selectedCategory = newCategory
-                viewModel.filterDocuments()
+                viewModel.filterObjects()
             }
         }
         .navigationTitle(viewModel.selectedCategory.rawValue)

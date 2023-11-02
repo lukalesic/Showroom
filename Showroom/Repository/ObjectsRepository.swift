@@ -12,7 +12,7 @@ import Observation
 final class ObjectsRepository: Repository {
     var loadingState = LoadingState.empty
     let database = Firestore.firestore()
-    var data: [DocumentSnapshot] = []
+    var objects: [ModelObject] = []
     
     func fetchAllData() {
         loadingState = .loading
@@ -24,11 +24,19 @@ final class ObjectsRepository: Repository {
                 }
                 else {
                     if let documents = snapshot?.documents {
-                        self.data.append(contentsOf: documents)
+                        self.mapSnapshotToObjects(snapshot: documents)
                         self.loadingState = .loaded
                     }
                 }
             }
         }
+    }
+    
+    func mapSnapshotToObjects(snapshot: [DocumentSnapshot]) {
+        let adapter = FirebaseAdapter()
+        let modelObjects = snapshot.map {
+            adapter.adaptSnapshot($0)
+        }
+        self.objects.append(contentsOf: modelObjects)
     }
 }

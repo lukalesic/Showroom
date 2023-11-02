@@ -14,7 +14,7 @@ struct CategoryView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
-                ForEach(viewModel.filteredData, id: \.self) {object in
+                ForEach(viewModel.filteredObjects, id: \.name) {object in
                     ObjectListView(object: object)
                         .onDrag {
                             NSItemProvider()

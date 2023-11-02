@@ -8,12 +8,14 @@
 import Foundation
 
 @Observable
-class Object {
+class ModelObject {
     var name: String
-    var modelURL: String
+    var modelURL: String?
+    var parentCollection: String
     
-    init(name: String, modelURL: String) {
+    init(name: String, modelURL: String, parentCollection: String) {
         self.name = name
         self.modelURL = modelURL
+        self.parentCollection = parentCollection
     }
 }
