@@ -18,40 +18,49 @@ struct ObjectsView: View {
     
     var body: some View {
         NavigationSplitView {
-            List(ModelType.allCases, id: \.self, selection: $selectedCategory) { category in
-                HStack {
-                    //TODO: replace with appropriate icons
-                    Image(systemName: "pencil")
-                    Text(category.rawValue)
-                }
-            }
+            sidebarView()
         } detail: {
             if let selectedCategory {
                 switch viewModel.repository.loadingState {
                 case .loaded:
-                    Text(viewModel.selectedCategory.rawValue)
-                    //TODO: DetailView(selectedcategory: viewModel.selectedCategory)
-                    List(viewModel.filteredData, id: \.documentID) { document in
-                        Text(document.data()?["test"] as? String ?? "No data")
-                    }
+                    CategoryView()
+                        .environment(viewModel)
                 default:
                     ProgressView()
                 }
             }
             else {
-                Text("Choose a category!")
+                placeholderObjectView()
             }
         }
-        
         .onChange(of: selectedCategory) { _, newCategory in
             if let newCategory = newCategory {
                 viewModel.selectedCategory = newCategory
                 viewModel.filterDocuments()
             }
         }
+        .navigationTitle(viewModel.selectedCategory.rawValue)
     }
 }
 
+private extension ObjectsView {
+    
+    @ViewBuilder
+    func placeholderObjectView() -> some View {
+        Text("Choose a category!")
+    }
+    
+    @ViewBuilder
+    func sidebarView() -> some View {
+        List(ModelType.allCases, id: \.self, selection: $selectedCategory) { category in
+            HStack {
+                //TODO: replace with appropriate icons from ModelType enum
+                Image(systemName: "pencil")
+                Text(category.rawValue)
+            }
+        }
+    }
+}
 #Preview {
     ObjectsView()
 }

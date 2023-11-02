@@ -44,6 +44,18 @@ struct ContentView: View {
                 Text("save")
             }
 
+            Model3D(named: "AirForce") { phase in
+                if let model = phase.model {
+                    model.resizable()
+                } else if let error = phase.error {
+                    Text("ERROR: \(error.localizedDescription)")
+                } else {
+                   VStack {
+                    Text("Loading")
+                    ProgressView()
+                }
+                }
+            }
             
             Toggle("Show Immersive Space", isOn: $showImmersiveSpace)
                 .toggleStyle(.button)

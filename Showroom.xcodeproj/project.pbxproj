@@ -24,6 +24,9 @@
 		DF9F65E32AF2EC6B008F109E /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65E22AF2EC6B008F109E /* LoadingState.swift */; };
 		DF9F65E62AF2F2D8008F109E /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65E52AF2F2D8008F109E /* Repository.swift */; };
 		DF9F65E82AF2F2EC008F109E /* ObjectsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65E72AF2F2EC008F109E /* ObjectsRepository.swift */; };
+		DF9F65EA2AF2F71F008F109E /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65E92AF2F71F008F109E /* CategoryView.swift */; };
+		DF9F65EC2AF312B6008F109E /* ObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65EB2AF312B6008F109E /* ObjectListView.swift */; };
+		DF9F65EE2AF312D1008F109E /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9F65ED2AF312D1008F109E /* Object.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +46,9 @@
 		DF9F65E22AF2EC6B008F109E /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		DF9F65E52AF2F2D8008F109E /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		DF9F65E72AF2F2EC008F109E /* ObjectsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsRepository.swift; sourceTree = "<group>"; };
+		DF9F65E92AF2F71F008F109E /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		DF9F65EB2AF312B6008F109E /* ObjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectListView.swift; sourceTree = "<group>"; };
+		DF9F65ED2AF312D1008F109E /* Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,8 @@
 				DF9F65DD2AF2C2FC008F109E /* Immersive */,
 				DF8BA87F2AF2A2F10000FB37 /* ContentView.swift */,
 				DF9F65DE2AF2C31D008F109E /* ObjectsView.swift */,
+				DF9F65E92AF2F71F008F109E /* CategoryView.swift */,
+				DF9F65EB2AF312B6008F109E /* ObjectListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -138,6 +146,7 @@
 		DF9F65D72AF2B7B0008F109E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DF9F65ED2AF312D1008F109E /* Object.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -251,6 +260,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF8BA8802AF2A2F10000FB37 /* ContentView.swift in Sources */,
+				DF9F65EC2AF312B6008F109E /* ObjectListView.swift in Sources */,
+				DF9F65EA2AF2F71F008F109E /* CategoryView.swift in Sources */,
 				DF9F65E12AF2C4BF008F109E /* ObjectsViewModel.swift in Sources */,
 				DF9F65DC2AF2C279008F109E /* ModelType.swift in Sources */,
 				DF9F65DF2AF2C31D008F109E /* ObjectsView.swift in Sources */,
@@ -258,6 +269,7 @@
 				DF8BA87E2AF2A2F10000FB37 /* ShowroomApp.swift in Sources */,
 				DF9F65E82AF2F2EC008F109E /* ObjectsRepository.swift in Sources */,
 				DF8BA8822AF2A2F10000FB37 /* ImmersiveView.swift in Sources */,
+				DF9F65EE2AF312D1008F109E /* Object.swift in Sources */,
 				DF9F65DA2AF2B7BA008F109E /* Constants.swift in Sources */,
 				DF9F65E62AF2F2D8008F109E /* Repository.swift in Sources */,
 			);

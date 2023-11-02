@@ -21,7 +21,9 @@ struct ShowroomApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            ObjectsView()
+            NavigationStack {
+                ObjectsView()
+            }
         }
 
         ImmersiveSpace(id: "ImmersiveSpace") {
