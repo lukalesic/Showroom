@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 import RealityKit
 
-struct ObjectListView: View {
+struct SingleObjectListView: View {
     let object: ModelObject
     var body: some View {
             Button {
