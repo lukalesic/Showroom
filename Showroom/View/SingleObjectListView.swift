@@ -11,31 +11,31 @@ import RealityKit
 
 struct SingleObjectListView: View {
     let object: ModelObject
+    
     var body: some View {
-            Button {
-                //lead to new screen
-            } label: {
-                VStack {
-                    if let modelURL = object.modelURL, let url = URL(string: modelURL) {
-                        Model3D(url: url) { phase in
-                                      switch phase {
-                                      case .success(let model):
-                                          model.resizable()
-                                      case .failure(let error):
-                                          Text(error.localizedDescription)
-                                      default:
-                                          ProgressView()
-                                      }
-                                  }
+            VStack {
+                if let modelURL = object.modelURL, let url = URL(string: modelURL) {
+                    Model3D(url: url) { phase in
+                        switch phase {
+                        case .success(let model):
+                            model
+                                .resizable()
+                                .clipped()
+                                .scaledToFit()
+                                .frame(maxWidth: 200, maxHeight: 200)
+                        case .failure(let error):
+                            Text(error.localizedDescription)
+                        default:
+                            ProgressView()
+                        }
                     }
-                    else {
-                        EmptyView()
-                    }
-                    Text(object.name)
                 }
-                .frame(width: 250, height: 250)
+                else {
+                    EmptyView()
+                }
+                Text(object.name)
             }
-            .buttonStyle(.borderless)
-        }
+            .frame(width: 250, height: 250)
+    }
 }
 

@@ -19,15 +19,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct ShowroomApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var manager = ImmersiveViewManager()
+    
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                ObjectsView()
-            }
+            AuthenticationView()
+                .environment(manager)
+//                ObjectsView()
+//                .environment(manager)
         }
 
-        ImmersiveSpace(id: "ImmersiveSpace") {
-            ImmersiveView()
+        WindowGroup(id: "object") {
+            ObjectView()
+                .environment(manager)
         }
+        .windowStyle(.volumetric)
+        .defaultSize(width: 1, height: 1, depth: 0.1, in: .meters)
     }
 }

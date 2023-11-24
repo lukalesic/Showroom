@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+@Observable
+class ImmersiveViewManager {
+    var activeObject: ModelObject?
+}

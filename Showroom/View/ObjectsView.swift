@@ -7,10 +7,13 @@
 
 import SwiftUI
 import Observation
+import FirebaseAuth
 
 struct ObjectsView: View {
     @State var selectedCategory: ModelType?
     @State var viewModel: ObjectsViewModel
+    @State var authenticationViewModel = AuthenticationViewModel()
+    @Environment(ImmersiveViewManager.self) private var manager: ImmersiveViewManager
 
     init() {
         _viewModel = State(initialValue: ObjectsViewModel(selectedCategory: .technology))
@@ -19,12 +22,15 @@ struct ObjectsView: View {
     var body: some View {
         NavigationSplitView {
             sidebarView()
+            logOutButton()
+                .padding(.bottom)
         } detail: {
             if let selectedCategory {
                 switch viewModel.repository.loadingState {
                 case .loaded:
                     CategoryView()
                         .environment(viewModel)
+                        .environment(manager)
                 default:
                     ProgressView()
                 }
@@ -36,7 +42,17 @@ struct ObjectsView: View {
         .onChange(of: selectedCategory) { _, newCategory in
             if let newCategory = newCategory {
                 viewModel.selectedCategory = newCategory
-                viewModel.filterObjects()
+                if newCategory == .favourites {
+                    viewModel.fetchFavourites()
+                }
+                else {
+                    viewModel.filterObjects()
+                }
+            }
+        }
+        .onAppear() {
+            if (selectedCategory == .favourites) {
+                viewModel.fetchFavourites()
             }
         }
         .navigationTitle(viewModel.selectedCategory.rawValue)
@@ -46,21 +62,36 @@ struct ObjectsView: View {
 private extension ObjectsView {
     
     @ViewBuilder
+    func logOutButton() -> some View {
+        Button {
+            Task {
+                    await authenticationViewModel.signOut()
+                }
+        } label: {
+            Text("Log out")
+        }
+
+    }
+    
+    @ViewBuilder
     func placeholderObjectView() -> some View {
+        Image(systemName: "square.3.layers.3d.top.filled")
+            .font(.system(size: 60))
         Text("Choose a category!")
+            .font(.largeTitle)
+            .padding(.top, 12)
     }
     
     @ViewBuilder
     func sidebarView() -> some View {
         List(ModelType.allCases, id: \.self, selection: $selectedCategory) { category in
             HStack {
-                //TODO: replace with appropriate icons from ModelType enum
-                Image(systemName: "pencil")
+                Image(systemName: category.imageName)
+                    .scaleEffect(1.8)
                 Text(category.rawValue)
+                    .padding(.leading, 12)
+                    .font(.system(size: 17))
             }
         }
     }
-}
-#Preview {
-    ObjectsView()
 }

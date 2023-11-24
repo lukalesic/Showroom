@@ -12,10 +12,14 @@ class ModelObject {
     var name: String
     var modelURL: String?
     var parentCollection: String
+    var description: String?
+    var isFavourite: Bool
     
-    init(name: String, modelURL: String, parentCollection: String) {
+    init(name: String, modelURL: String, parentCollection: String, description: String, isFavourite: Bool) {
         self.name = name
         self.modelURL = modelURL
         self.parentCollection = parentCollection
+        self.description = description
+        self.isFavourite = isFavourite
     }
 }
