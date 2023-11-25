@@ -23,10 +23,9 @@ class ObjectsViewModel {
     }
     
     //MARK: filtering data
-    
+ 
     func fetchFavourites() {
-        let favourites = repository.modelObjects.filter({ $0.isFavourite })
-        filteredObjects = favourites
+        filteredObjects = repository.favouriteObjects
     }
     
     func filterObjects() {
@@ -53,7 +52,7 @@ class ObjectsViewModel {
                 let document = snapshot!.documents.first
                 document?.reference.updateData(
                 [
-                    "isFavourite": favouriteStatus
+                    "isFavourite": !favouriteStatus
                 ])
             }
         }

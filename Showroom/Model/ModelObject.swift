@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class ModelObject {
+class ModelObject: Decodable {
     var name: String
     var modelURL: String?
     var parentCollection: String

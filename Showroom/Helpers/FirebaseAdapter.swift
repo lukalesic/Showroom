@@ -18,4 +18,11 @@ class FirebaseAdapter: Adapter {
         let modelObject = ModelObject(name: name, modelURL: modelURL, parentCollection: parentCollection, description: description, isFavourite: isFavourite)
         return modelObject
     }
+    
+    func mapDocumentSnapshot(_ snapshot: [DocumentSnapshot]) -> [ModelObject] {
+        let modelObjects = snapshot.map {
+            self.adaptSnapshot($0)
+        }
+        return modelObjects
+    }
 }

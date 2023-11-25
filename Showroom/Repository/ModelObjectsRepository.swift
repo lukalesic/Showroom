@@ -13,6 +13,8 @@ final class ModelObjectsRepository: Repository {
     var loadingState = LoadingState.empty
     let database = Firestore.firestore()
     var modelObjects: [ModelObject] = []
+    var favouriteObjects: [ModelObject] = []
+    let adapter = FirebaseAdapter()
     
     func fetchAllData() {
         loadingState = .loading
@@ -30,13 +32,37 @@ final class ModelObjectsRepository: Repository {
                 }
             }
         }
+        fetchFavourites()
+    }
+    
+    func fetchFavourites() {
+        var collectionRefs = [CollectionReference]()
+        for path in ModelType.allCases {
+            let collectionRef = database.collection(path.databaseId)
+            collectionRefs.append(collectionRef)
+          }
+        
+        for collectionRef in collectionRefs {
+          let query = collectionRef.whereField("isFavourite", isEqualTo: true)
+          query.getDocuments { (snapshot, error) in
+            if let error = error {
+              print("Error fetching favourites: \(error.localizedDescription)")
+              return
+            }
+              
+              if let documents = snapshot?.documents {
+                  self.mapFavourites(snapshot: documents)
+                  self.loadingState = .loaded
+              }
+            }
+        }
     }
     
     func mapSnapshotToModelObjects(snapshot: [DocumentSnapshot]) {
-        let adapter = FirebaseAdapter()
-        let modelObjects = snapshot.map {
-            adapter.adaptSnapshot($0)
-        }
-        self.modelObjects.append(contentsOf: modelObjects)
+        self.modelObjects.append(contentsOf: adapter.mapDocumentSnapshot(snapshot))
+    }
+    
+    func mapFavourites(snapshot: [DocumentSnapshot]) {
+        self.favouriteObjects.append(contentsOf: adapter.mapDocumentSnapshot(snapshot))
     }
 }
