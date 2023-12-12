@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import Observation
+import FirebaseAuth
 
 final class ModelObjectsRepository: Repository {
     var loadingState = LoadingState.empty
@@ -36,6 +37,12 @@ final class ModelObjectsRepository: Repository {
     }
     
     func fetchFavourites() {
+        
+        guard let userId = Auth.auth().currentUser?.uid else {
+            // No user is signed in, handle this case
+            return
+        }
+        
         var collectionRefs = [CollectionReference]()
         for path in ModelType.allCases {
             let collectionRef = database.collection(path.databaseId)
@@ -43,7 +50,7 @@ final class ModelObjectsRepository: Repository {
           }
         
         for collectionRef in collectionRefs {
-          let query = collectionRef.whereField("isFavourite", isEqualTo: true)
+          let query = collectionRef.whereField("favorites.\(userId)", isEqualTo: true)
           query.getDocuments { (snapshot, error) in
             if let error = error {
               print("Error fetching favourites: \(error.localizedDescription)")

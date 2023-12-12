@@ -22,6 +22,7 @@ struct SingleObjectListView: View {
                                 .resizable()
                                 .clipped()
                                 .scaledToFit()
+                                .scaleEffect(0.8)
                                 .frame(maxWidth: 200, maxHeight: 200)
                         case .failure(let error):
                             Text(error.localizedDescription)

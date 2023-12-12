@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 import FirebaseFirestore
+import FirebaseAuth
 
 @Observable
 class ObjectsViewModel {
@@ -37,6 +38,11 @@ class ObjectsViewModel {
     }
     
     func addToFavourites(_ object: ModelObject) {
+        
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+
         let collectionRef = database
             .collection(selectedCategory.databaseId)
             .whereField("name", isEqualTo: object.name)
@@ -52,7 +58,8 @@ class ObjectsViewModel {
                 let document = snapshot!.documents.first
                 document?.reference.updateData(
                 [
-                    "isFavourite": !favouriteStatus
+                    "isFavourite": !favouriteStatus,
+                    "favorites.\(userId)": !favouriteStatus
                 ])
             }
         }

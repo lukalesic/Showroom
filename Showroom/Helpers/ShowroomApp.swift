@@ -34,6 +34,6 @@ struct ShowroomApp: App {
                 .environment(manager)
         }
         .windowStyle(.volumetric)
-        .defaultSize(width: 1, height: 1, depth: 0.1, in: .meters)
+        .defaultSize(width: 2, height: 2, depth: 2, in: .meters)
     }
 }
