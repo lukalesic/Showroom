@@ -30,6 +30,16 @@ class ObjectsViewModel {
         filteredObjects = repository.favouriteObjects
     }
     
+    func refresh() {
+        Task {
+            filteredObjects = []
+            repository.fetchAllData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+                self?.filterObjects()
+            }
+        }
+    }
+    
     func filterObjects() {
         let filteredDocuments = repository.modelObjects.filter { object in
             let collectionName = object.parentCollection

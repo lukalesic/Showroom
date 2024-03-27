@@ -23,6 +23,9 @@ struct CategoryView: View {
                             .buttonStyle(PlainButtonStyle())
                     }
             }
+            .refreshable {
+                viewModel.refresh()
+            }
         }.navigationViewStyle(.stack)
     }
 }
@@ -62,3 +65,4 @@ struct CustomGridLayout<Element, GridCell>: View where GridCell: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
+

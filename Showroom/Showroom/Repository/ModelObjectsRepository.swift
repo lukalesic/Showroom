@@ -18,6 +18,7 @@ final class ModelObjectsRepository: Repository {
     let adapter = FirebaseAdapter()
     
     func fetchAllData() {
+        modelObjects = []
         loadingState = .loading
         for modelType in ModelType.allCases {
             let collectionRef = database.collection(modelType.databaseId)
