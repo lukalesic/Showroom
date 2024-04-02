@@ -12,7 +12,7 @@ import FirebaseAuth
 import AVFAudio
 
 @Observable
-class ObjectsViewModel {
+class ObjectViewModel {
     var selectedCategory: ModelType
     let repository = ModelObjectsRepository()
     var filteredObjects: [ModelObject] = []
@@ -27,7 +27,14 @@ class ObjectsViewModel {
     //MARK: filtering data
  
     func fetchFavourites() {
-        filteredObjects = repository.favouriteObjects
+        repository.fetchFavourites()
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 2
+        ) { [weak self] in
+            self?.filteredObjects = (
+                self?.repository.favouriteObjects
+            )!
+        }
     }
     
     func refresh() {
@@ -36,6 +43,7 @@ class ObjectsViewModel {
             repository.fetchAllData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 self?.filterObjects()
+                self?.fetchFavourites()
             }
         }
     }
@@ -75,5 +83,4 @@ class ObjectsViewModel {
             }
         }
     }
-
 }

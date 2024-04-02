@@ -35,6 +35,8 @@ struct SingleObjectListView: View {
                     EmptyView()
                 }
                 Text(object.name)
+                Text("\(object.price ?? 0 ) EUR")
+                    .font(.title2)
             }
             .frame(width: 250, height: 250)
     }

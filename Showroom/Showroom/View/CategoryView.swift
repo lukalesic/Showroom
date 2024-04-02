@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CategoryView: View {
-    @Environment(ObjectsViewModel.self) private var viewModel: ObjectsViewModel
+    @Environment(ObjectViewModel.self) private var viewModel: ObjectViewModel
     var columns: [GridItem] = [.init(.adaptive(minimum: 300), spacing: 30)]
     @Environment(ImmersiveViewManager.self) private var manager: ImmersiveViewManager
 
@@ -16,16 +16,24 @@ struct CategoryView: View {
         NavigationView {
             ScrollView {
                 CustomGridLayout(viewModel.filteredObjects, numberOfColumns: 3) { object in
-                        NavigationLink(destination: ObjectDetailsView(object: object).environment(manager).environment(viewModel)) {
+                    NavigationLink(
+                        destination: ObjectDetailsView(
+                            object: object
+                        ).environment(
+                            manager
+                        ).environment(
+                            viewModel
+                        )
+                    ) {
                             SingleObjectListView(object: object)
                         }
-                    
                             .buttonStyle(PlainButtonStyle())
                     }
             }
             .refreshable {
                 viewModel.refresh()
             }
+            .navigationTitle("\(viewModel.selectedCategory)")
         }.navigationViewStyle(.stack)
     }
 }

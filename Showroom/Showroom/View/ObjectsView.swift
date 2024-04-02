@@ -11,18 +11,21 @@ import FirebaseAuth
 
 struct ObjectsView: View {
     @State var selectedCategory: ModelType?
-    @State var viewModel: ObjectsViewModel
+    @State var viewModel: ObjectViewModel
     @State var authenticationViewModel = AuthenticationViewModel()
     @Environment(ImmersiveViewManager.self) private var manager: ImmersiveViewManager
 
     init() {
-        _viewModel = State(initialValue: ObjectsViewModel(selectedCategory: .technology))
+        _viewModel = State(initialValue: ObjectViewModel(selectedCategory: .technology))
         }
     
     var body: some View {
         NavigationSplitView {
             sidebarView()
-            logOutButton()
+            HStack {
+                cartButton()
+                logOutButton()
+            }
                 .padding(.bottom)
         } detail: {
             if let selectedCategory {
@@ -60,6 +63,15 @@ struct ObjectsView: View {
 }
 
 private extension ObjectsView {
+    
+    @ViewBuilder
+    func cartButton() -> some View {
+        NavigationLink {
+            CartView()
+        } label: {
+            Text("\(Image(systemName: "cart.fill")) Cart")
+        }
+    }
     
     @ViewBuilder
     func logOutButton() -> some View {

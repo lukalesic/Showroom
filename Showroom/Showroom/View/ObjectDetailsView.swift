@@ -12,7 +12,9 @@ struct ObjectDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.openWindow) var openWindow
     @Environment(ImmersiveViewManager.self) private var manager: ImmersiveViewManager
-    @Environment(ObjectsViewModel.self) private var viewModel: ObjectsViewModel
+    @Environment(ObjectViewModel.self) private var viewModel: ObjectViewModel
+    @State private var isShowingFavouritesAlert = false
+    @State private var isShowingCartAlert = false
 
     var object: ModelObject
     
@@ -21,6 +23,9 @@ struct ObjectDetailsView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 customBackButton()
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                shareButton()
             }
         }
     }
@@ -54,6 +59,10 @@ private extension ObjectDetailsView {
                         .frame(width: 300, height: 300)
                 }
             }
+            .opacity(isShowingFavouritesAlert || isShowingCartAlert ? 0 : 1)
+            .animation(.easeInOut, value: isShowingFavouritesAlert)
+            .animation(.easeInOut, value: isShowingCartAlert)
+
         }
     }
     
@@ -69,6 +78,10 @@ private extension ObjectDetailsView {
                         .font(.system(size: 30))
                     Text(object.description ?? "")
                         .font(.system(size: 25))
+                    HStack(spacing: 15) {
+                        price()
+                        addToCartButton()
+                    }
                     addToSpaceButton()
                     addToFavouritesButton()
                 }
@@ -91,15 +104,53 @@ private extension ObjectDetailsView {
         })
     }
     
+    @ViewBuilder
+    func price() -> some View {
+        Text("Price: \(object.price ?? 0) EUR")
+            .font(.title)
+    }
+    
+    @ViewBuilder
+    func shareButton() -> some View {
+        ShareLink(item: object.modelURL!, subject: Text(object.name), message: Text(object.description ?? ""))
+    }
+    
+    @ViewBuilder
+    func addToCartButton() -> some View {
+        Button {
+            CartManager.shared.addToCart(object: object)
+            SoundManager.shared.playSound(soundName: "ding")
+            isShowingCartAlert = true
+        } label: {
+            Text("\(Image(systemName: "cart")) Add to cart")
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(.green)
+        .alert("Added to cart!", isPresented: $isShowingCartAlert)
+        {
+            Button("OK", role: .cancel) { }
+        }
+        
+    }
+    
     func addToFavouritesButton() -> some View {
         Button(action: {
             SoundManager.shared.playSound(soundName: "ding")
-            viewModel.addToFavourites(object)
+            if (object.isFavourite == false) {
+                isShowingFavouritesAlert.toggle()
+            }
+            withAnimation {
+                viewModel.addToFavourites(object)
+            }
         }, label: {
             HStack(spacing: 5) {
                 Image(systemName: "star.fill")
                 Text(object.isFavourite ? "Remove from Favourites" : "Add to Favourites")
             }
         })
+        .tint(object.isFavourite ? .orange : .accentColor)
+        .alert("Added to favourites!", isPresented: $isShowingFavouritesAlert) {
+                  Button("OK", role: .cancel) { }
+              }
     }
 }

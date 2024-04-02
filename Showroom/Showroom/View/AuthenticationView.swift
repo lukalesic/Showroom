@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import _AuthenticationServices_SwiftUI
 
 enum AuthenticationScreen: String {
     case login = "Login"

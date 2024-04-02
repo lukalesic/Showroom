@@ -43,6 +43,7 @@ final class ModelObjectsRepository: Repository {
             // No user is signed in, handle this case
             return
         }
+        favouriteObjects = []
         
         var collectionRefs = [CollectionReference]()
         for path in ModelType.allCases {
