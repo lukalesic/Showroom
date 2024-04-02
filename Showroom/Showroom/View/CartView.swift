@@ -11,24 +11,29 @@ struct CartView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ScrollView {
-                    CustomGridLayout(
-                        CartManager.shared.items,
-                        numberOfColumns: 3
-                    ) { object in
-                        NavigationLink(
-                            destination: ObjectDetailsView(
-                                object: object
-                            )
-                        ) {
-                            SingleObjectListView(
-                                object: object
+                if CartManager.shared.items.count > 0 {
+                    ScrollView {
+                        CustomGridLayout(
+                            CartManager.shared.items,
+                            numberOfColumns: 3
+                        ) { object in
+                            NavigationLink(
+                                destination: ObjectDetailsView(
+                                    object: object
+                                )
+                            ) {
+                                SingleObjectListView(
+                                    object: object
+                                )
+                            }
+                            .buttonStyle(
+                                PlainButtonStyle()
                             )
                         }
-                        .buttonStyle(
-                            PlainButtonStyle()
-                        )
                     }
+                }
+                else {
+                    emptyCartView()
                 }
             }
             .navigationTitle(
@@ -41,7 +46,7 @@ struct CartView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {
                     NavigationLink {
-                        //
+                        BuyingInfoScreen()
                     } label: {
                         Text("\(Image(systemName: "cart.circle.fill")) Buy all")
                     }
@@ -72,4 +77,12 @@ struct CartView: View {
 
 #Preview {
     CartView()
+}
+
+
+private extension CartView {
+    @ViewBuilder
+    func emptyCartView() -> some View {
+        ContentUnavailableView("No items in cart!", image: "")
+    }
 }
