@@ -34,13 +34,19 @@ struct ObjectsView: View {
                     CategoryView()
                         .environment(viewModel)
                         .environment(manager)
+                        .animation(.easeInOut, value: viewModel.selectedCategory)
+
                 default:
-                    ProgressView()
+                    placeholderObjectView()
+                        .animation(.easeInOut, value: viewModel.selectedCategory)
                 }
             }
             else {
                 placeholderObjectView()
+                    .animation(.easeInOut, value: viewModel.selectedCategory)
+
             }
+
         }
         .onChange(of: selectedCategory) { _, newCategory in
             if let newCategory = newCategory {

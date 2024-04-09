@@ -11,11 +11,12 @@ struct CategoryView: View {
     @Environment(ObjectViewModel.self) private var viewModel: ObjectViewModel
     var columns: [GridItem] = [.init(.adaptive(minimum: 300), spacing: 30)]
     @Environment(ImmersiveViewManager.self) private var manager: ImmersiveViewManager
+    @State private var searchText = ""
 
     var body: some View {
         NavigationView {
             ScrollView {
-                CustomGridLayout(viewModel.filteredObjects, numberOfColumns: 3) { object in
+                CustomGridLayout(searchResults, numberOfColumns: 3) { object in
                     NavigationLink(
                         destination: ObjectDetailsView(
                             object: object
@@ -33,9 +34,21 @@ struct CategoryView: View {
             .refreshable {
                 viewModel.refresh()
             }
+            .searchable(text: $searchText)
             .navigationTitle("\(viewModel.selectedCategory)")
         }.navigationViewStyle(.stack)
     }
+    
+    var searchResults: [ModelObject] {
+        if searchText.isEmpty {
+            return viewModel.filteredObjects
+        } else {
+            return viewModel.filteredObjects.filter { result in
+                result.name.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
+
 }
 
 //using LazyVGrid causes bugs on the current VisionOS beta. Alternative provided below:
