@@ -35,6 +35,7 @@ struct CategoryView: View {
                 viewModel.refresh()
             }
             .searchable(text: $searchText)
+            .animation(.easeInOut, value: self.searchText)
             .navigationTitle("\(viewModel.selectedCategory)")
         }.navigationViewStyle(.stack)
     }

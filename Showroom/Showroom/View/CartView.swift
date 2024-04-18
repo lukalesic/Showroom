@@ -17,19 +17,13 @@ struct CartView: View {
                             CartManager.shared.items,
                             numberOfColumns: 3
                         ) { object in
-                            NavigationLink(
-                                destination: ObjectDetailsView(
-                                    object: object
-                                )
-                            ) {
-                                SingleObjectListView(
-                                    object: object
-                                )
-                            }
-                            .buttonStyle(
-                                PlainButtonStyle()
+                            SingleObjectListView(
+                                object: object
                             )
                         }
+                        .buttonStyle(
+                            PlainButtonStyle()
+                        )
                     }
                 }
                 else {
@@ -52,7 +46,7 @@ struct CartView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.blue)
-
+                    
                     
                     Button {
                         CartManager.shared.clearCart()
